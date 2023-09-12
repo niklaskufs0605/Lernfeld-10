@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Verbrauchswerte des Wassers im Haus</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+</head>
+<body>
+    <h1>Verbrauchswerte des Wassers im Haus</h1>
+    <canvas id="myChart" width="400" height="200"></canvas>
+
+    <button onclick="setXAreaSize(10,1)">View last 10 minutes</button>
+    <button onclick="setXAreaSize(30,5)">View last 30 minutes</button>
+
+    <script>
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var chart = null;
+
+        var yValues = [];
+        var xValues = [];
+        var xAreaSize = 10;
+        var xStepSize = 1;
+
+        function createChart() {
+            chart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: xValues,
+                    datasets: [{
+                        label: 'Usage in Liters',
+                        data: yValues,
+                        fill: false,
+                        borderColor: 'rgb(75, 192, 192)',
+                        tension: 0.1
+                    }]
+                },
+                options: {
+                    scales: {
+                        x: {
+                            type: 'linear',
+                            position: 'bottom',
+                            title: {
+                                display: true,
+                                text: 'Time in Minutes'
+                            },
+                            min: 1,
+                            max: xAreaSize,
+                            ticks: {
+                              stepSize: xStepSize
+                            }
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Usage'
+                            },
+                            min: 0,
+                            max: 10
+                        }
+                    }
+                }
+            });
+        }
+
+        function addRandomValueToChart() {
+            var randomValue = Math.random() * 10;
+            var currentTime = xValues.length + 1;
+
+            yValues.push(randomValue.toFixed(2));
+            xValues.push(currentTime);
+
+            if (xValues.length > xAreaSize) {
+                chart.options.scales.x.max = xValues.length;
+                chart.options.scales.x.min = xValues.length - xAreaSize + 1;
+            } else {
+              chart.options.scales.x.max = xAreaSize;
+            }
+
+            chart.update();
+        }
+
+        function setXAreaSize(size, stepsize) {
+            xAreaSize = size;
+            xStepSize = stepsize;
+            if (xValues.length > xAreaSize) {
+                chart.options.scales.x.max = xValues.length;
+                chart.options.scales.x.min = xValues.length - xAreaSize + 1;
+            } else {
+              chart.options.scales.x.max = xAreaSize;
+              chart.options.scales.x.min = 1;
+            }
+            chart.options.scales.x.ticks.stepSize = xStepSize;
+            chart.update();
+        }
+
+        createChart();
+
+        setInterval(addRandomValueToChart, 1000);
+    </script>
+</body>
+</html>
