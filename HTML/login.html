@@ -50,19 +50,24 @@
             text-decoration: none;
             color: #007BFF;
         }
+        .submit-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h2>Login</h2>
-        <form action="#" method="post" id="login">
-            <label for="email">Benutzername:</label>
-            <input type="email" id="email" name="email" required>
-            <label for="password">Passwort:</label>
-            <input type="password" id="password" name="password" required>
-            <input type="submit" value="Anmelden">
-        </form>
-        <script src="script/request.js"></script>
+        <label for="email">Benutzername:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Passwort:</label>
+        <input type="password" id="password" name="password" required>
+        <button class="submit-button" id="loginButton"> Login</button>
+        <script src="scripts/login.js"></script>
         <div class="login-link">
             <p>Account erstellen? <a href="register.html">Zur Registrierung</a></p>
         </div>
