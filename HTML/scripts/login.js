@@ -70,5 +70,3 @@ async function login(email, password){
     }
     
 }
-
-export const uuid = uuid_now;

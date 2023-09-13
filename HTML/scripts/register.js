@@ -63,7 +63,6 @@ async function sendForm(email, password, confirmPassword){
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
-        window.location.href = 'http://localhost:8000/login.html';
         return response.json();
     })
     .catch(error => {
